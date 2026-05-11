@@ -26,8 +26,7 @@ jobs:
         run: |
           brew tap mongodb/brew
           brew install mongodb-community
-          mkdir -p /tmp/mongodb-data
-          mongod --dbpath /tmp/mongodb-data --logpath /tmp/mongod.log --fork
+          brew services start mongodb/brew/mongodb-community
           until mongosh --quiet --eval "db.runCommand({ping:1})" 2>/dev/null; do sleep 1; done
 
       - name: Install C driver
