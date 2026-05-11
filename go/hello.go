@@ -40,4 +40,6 @@ func main() {
 	}
 
 	fmt.Printf("Ping from mongo-go-driver %s ... OK\n", version)
+
+	// TODO: add your code here
 }

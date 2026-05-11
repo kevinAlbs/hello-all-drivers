@@ -13,5 +13,8 @@ async fn main() -> mongodb::error::Result<()> {
         .await?;
 
     println!("Ping from mongodb {} ... OK", DRIVER_VERSION);
+
+    // TODO: add your code here
+
     Ok(())
 }

@@ -6,8 +6,11 @@ async function main() {
   const client = new MongoClient("mongodb://localhost:27017");
   await client.connect();
   await client.db("admin").command({ ping: 1 });
-  await client.close();
   console.log(`Ping from mongodb ${version} ... OK`);
+
+  // TODO: add your code here
+
+  await client.close();
 }
 
 main().catch(console.error);

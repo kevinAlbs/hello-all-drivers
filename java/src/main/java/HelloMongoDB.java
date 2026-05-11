@@ -16,8 +16,9 @@ public class HelloMongoDB {
 
         try (MongoClient client = MongoClients.create("mongodb://localhost:27017")) {
             client.getDatabase("admin").runCommand(new Document("ping", 1));
-        }
+            System.out.printf("Ping from mongodb-driver-sync %s ... OK%n", version);
 
-        System.out.printf("Ping from mongodb-driver-sync %s ... OK%n", version);
+            // TODO: add your code here
+        }
     }
 }

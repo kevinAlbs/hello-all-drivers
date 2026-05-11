@@ -12,3 +12,5 @@ var db = client.GetDatabase("admin");
 db.RunCommand<BsonDocument>(new BsonDocument("ping", 1));
 
 Console.WriteLine($"Ping from MongoDB.Driver {versionStr} ... OK");
+
+// TODO: add your code here

@@ -20,6 +20,9 @@ int main(void) {
 
     bson_destroy(command);
     bson_destroy(&reply);
+
+    /* TODO: add your code here */
+
     mongoc_client_destroy(client);
     mongoc_cleanup();
 
