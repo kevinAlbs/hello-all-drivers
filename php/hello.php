@@ -1,6 +1,10 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
+$version = \Composer\InstalledVersions::getPrettyVersion('mongodb/mongodb');
+echo "Ping from mongo-php-library {$version} ...\n";
+
 $client = new MongoDB\Client('mongodb://localhost:27017');
-$result = $client->admin->command(['ping' => 1]);
-var_dump(iterator_to_array($result)[0]);
+$client->admin->command(['ping' => 1]);
+
+echo "Ping from mongo-php-library {$version} ... OK\n";
