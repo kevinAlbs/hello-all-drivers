@@ -7,10 +7,10 @@ if [ ! -d dependencies ]; then
     exit 1
 fi
 
-export PKG_CONFIG_PATH="$(pwd)/dependencies/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+cmake -S . -B build \
+    -DCMAKE_BUILD_TYPE=Debug \
+    -DCMAKE_PREFIX_PATH="$(pwd)/dependencies"
 
-cc hello.c -o hello \
-    $(pkg-config --cflags --libs mongoc2) \
-    -Wl,-rpath,"$(pwd)/dependencies/lib"
+cmake --build build
 
-./hello
+./build/hello
