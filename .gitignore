@@ -1,0 +1,28 @@
+# C
+c/hello
+c/dependencies/
+c/.build_tmp/
+
+# Go
+go/hello
+
+# Rust
+rust/target/
+
+# PHP
+php/vendor/
+
+# Python
+python/__pycache__/
+python/*.pyc
+
+# Node
+node/node_modules/
+
+# Java
+java/target/
+java/dependency-reduced-pom.xml
+
+# C#
+csharp/bin/
+csharp/obj/
