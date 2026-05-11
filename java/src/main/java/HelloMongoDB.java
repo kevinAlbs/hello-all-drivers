@@ -1,3 +1,5 @@
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import java.io.InputStream;
@@ -14,7 +16,12 @@ public class HelloMongoDB {
 
         System.out.printf("Ping from mongodb-driver-sync %s ...%n", version);
 
-        try (MongoClient client = MongoClients.create("mongodb://localhost:27017")) {
+        MongoClientSettings.Builder settingsBuilder = MongoClientSettings.builder()
+            .applyConnectionString(new ConnectionString("mongodb://localhost:27017"));
+        if (System.getenv("PRINT_MONGODB_COMMANDS") != null) {
+            settingsBuilder.addCommandListener(new CommandMonitor());
+        }
+        try (MongoClient client = MongoClients.create(settingsBuilder.build())) {
             client.getDatabase("admin").runCommand(new Document("ping", 1));
             System.out.printf("Ping from mongodb-driver-sync %s ... OK%n", version);
 

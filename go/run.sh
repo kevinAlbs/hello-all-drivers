@@ -3,4 +3,4 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 go mod tidy
-go run hello.go
+go run .

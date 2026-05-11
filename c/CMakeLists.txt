@@ -5,5 +5,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(mongoc REQUIRED)
 
-add_executable(hello hello.c)
+add_executable(hello hello.c monitor.c)
 target_link_libraries(hello PRIVATE mongoc::shared)

@@ -1,3 +1,4 @@
+#include "monitor.h"
 #include <mongoc/mongoc.h>
 #include <stdio.h>
 
@@ -5,6 +6,7 @@ int main(void) {
     mongoc_init();
 
     mongoc_client_t *client = mongoc_client_new("mongodb://localhost:27017");
+    monitor_install(client);
 
     printf("Ping from mongo-c-driver %s ...\n", MONGOC_VERSION_S);
 

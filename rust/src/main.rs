@@ -1,4 +1,6 @@
-use mongodb::{bson::doc, Client};
+mod monitor;
+
+use mongodb::{bson::doc, options::ClientOptions, Client};
 
 const DRIVER_VERSION: &str = env!("MONGODB_CRATE_VERSION");
 
@@ -6,7 +8,9 @@ const DRIVER_VERSION: &str = env!("MONGODB_CRATE_VERSION");
 async fn main() -> mongodb::error::Result<()> {
     println!("Ping from mongodb {} ...", DRIVER_VERSION);
 
-    let client = Client::with_uri_str("mongodb://localhost:27017").await?;
+    let mut options = ClientOptions::parse("mongodb://localhost:27017").await?;
+    options.command_event_handler = monitor::make_handler();
+    let client = Client::with_options(options)?;
     client
         .database("admin")
         .run_command(doc! { "ping": 1 })

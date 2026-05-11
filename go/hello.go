@@ -28,7 +28,7 @@ func main() {
 	version := driverVersion()
 	fmt.Printf("Ping from mongo-go-driver %s ...\n", version)
 
-	client, err := mongo.Connect(options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, err := mongo.Connect(options.Client().ApplyURI("mongodb://localhost:27017").SetMonitor(makeMonitor()))
 	if err != nil {
 		log.Fatal(err)
 	}

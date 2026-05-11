@@ -1,5 +1,8 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/Monitor.php';
+
+setup_monitoring();
 
 $version = \Composer\InstalledVersions::getPrettyVersion('mongodb/mongodb');
 echo "Ping from mongo-php-library {$version} ...\n";

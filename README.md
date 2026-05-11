@@ -32,6 +32,27 @@ Ping from <driver> <version> ...
 Ping from <driver> <version> ... OK
 ```
 
+## Command monitoring
+
+Set `PRINT_MONGODB_COMMANDS=1` to print every outgoing command and its reply:
+
+```bash
+PRINT_MONGODB_COMMANDS=1 bash go/run.sh
+```
+
+Example output:
+```
+Ping from mongo-go-driver v2.6.0 ...
+>> ping {"ping": 1, "$db": "admin", ...}
+<< ping {"ok": 1.0, ...}
+Ping from mongo-go-driver v2.6.0 ... OK
+```
+
+The monitoring code lives in a separate file in each subdirectory (`monitor.c`,
+`monitor.cpp`, `monitor.go`, `monitor.rs`, `monitor.rb`, `Monitor.php`,
+`monitor.py`, `CommandMonitor.java`, `Monitor.cs`, `monitor.js`) so the main
+hello file stays focused on the driver usage.
+
 ## Adding your own code
 
 Make a branch of this repo.

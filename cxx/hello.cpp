@@ -1,13 +1,14 @@
+#include "monitor.hpp"
+#include <bsoncxx/json.hpp>
 #include <mongocxx/client.hpp>
 #include <mongocxx/config/version.hpp>
 #include <mongocxx/instance.hpp>
 #include <mongocxx/uri.hpp>
-#include <bsoncxx/json.hpp>
 #include <iostream>
 
 int main() {
     mongocxx::instance inst{};
-    mongocxx::client client{mongocxx::uri{"mongodb://localhost:27017"}};
+    mongocxx::client client{mongocxx::uri{"mongodb://localhost:27017"}, make_monitor_opts()};
 
     std::cout << "Ping from mongo-cxx-driver " << MONGOCXX_VERSION_STRING << " ...\n";
 

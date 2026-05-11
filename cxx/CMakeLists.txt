@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(mongocxx REQUIRED)
 
-add_executable(hello hello.cpp)
+add_executable(hello hello.cpp monitor.cpp)
 target_link_libraries(hello PRIVATE mongo::mongocxx_shared)
