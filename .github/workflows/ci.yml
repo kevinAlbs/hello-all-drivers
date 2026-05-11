@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # PHP is not pre-installed on macos-latest; this action installs it
+      # along with the mongodb PECL extension in one step.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: mongodb
+
+      - name: Start MongoDB
+        run: |
+          brew tap mongodb/brew
+          brew install mongodb-community
+          mkdir -p /tmp/mongodb-data
+          mongod --dbpath /tmp/mongodb-data --logpath /tmp/mongod.log --fork
+          until mongosh --quiet --eval "db.runCommand({ping:1})" 2>/dev/null; do sleep 1; done
+
+      - name: Install C driver
+        run: brew install mongo-c-driver
+
+      - name: C
+        run: bash c/run.sh
+
+      - name: Go
+        run: bash go/run.sh
+
+      - name: Rust
+        run: bash rust/run.sh
+
+      - name: PHP
+        run: bash php/run.sh
+
+      - name: Python
+        run: bash python/run.sh
+
+      - name: Java
+        run: bash java/run.sh
+
+      - name: C#
+        run: bash csharp/run.sh
+
+      - name: Node
+        run: bash node/run.sh

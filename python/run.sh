@@ -2,5 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-pip install pymongo --quiet
-python3 hello.py
+if [ ! -d .venv ]; then
+    python3 -m venv .venv
+fi
+.venv/bin/pip install pymongo --quiet
+.venv/bin/python3 hello.py
