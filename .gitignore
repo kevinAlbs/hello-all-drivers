@@ -3,6 +3,8 @@
 !.claude/commands/
 !.claude/commands/*.md
 
+.claude/settings.local.json
+
 # C
 c/build/
 c/dependencies/

@@ -1,7 +1,6 @@
 # hello-all-drivers
 
-Minimal "hello world" examples for each official MongoDB driver. Each example
-connects to a local MongoDB server and runs a ping command.
+Minimal "hello world" examples for each MongoDB driver. Each example runs a ping command.
 
 ## Prerequisites
 
@@ -12,19 +11,10 @@ mongosh --eval "db.runCommand({ping:1})"
 
 ## Running an example
 
-Every subdirectory has a `run.sh` that installs dependencies and runs the example:
+Each subdirectory has a `run.sh` that installs dependencies and runs the example. Example:
 
 ```
-bash c/run.sh
-bash cxx/run.sh
-bash go/run.sh
-bash rust/run.sh
-bash ruby/run.sh
-bash php/run.sh
 bash python/run.sh
-bash java/run.sh
-bash csharp/run.sh
-bash node/run.sh
 ```
 
 Expected output format:
@@ -33,14 +23,12 @@ Ping from <driver> <version> ...
 Ping from <driver> <version> ... OK
 ```
 
-The C and C++ examples build `mongo-c-driver` / `mongo-cxx-driver` from source
-on first run if the library is not already installed. Pass
-`brew install mongo-c-driver mongo-cxx-driver` to skip the source build.
-
 ## Adding your own code
 
-Each example has a `# TODO: add your code here` comment placed after the
-successful ping, with the client still in scope. That is the intended edit point.
+Make a branch of this repo.
+
+Edit the examples. There is a TODO comment suggesting where to modify.
+
 
 ## Updating driver versions
 
@@ -51,21 +39,6 @@ Use the `/update-deps` Claude Code command (requires [Claude Code](https://claud
 /update-deps c      # update only the C driver
 /update-deps go     # update only the Go driver
 ```
-
-### Updating manually
-
-| Driver | Where the version lives | How to update |
-|--------|------------------------|---------------|
-| C | `c/run.sh` `DRIVER_VERSION=` | Edit the variable, delete `c/dependencies/`, rerun `run.sh` |
-| C++ | `cxx/run.sh` `DRIVER_VERSION=` | Edit the variable, delete `cxx/dependencies/`, rerun `run.sh` |
-| Go | `go/go.mod` | `cd go && go get go.mongodb.org/mongo-driver/v2@latest && go mod tidy` |
-| Rust | `rust/Cargo.toml` major pin | `cd rust && cargo update -p mongodb` |
-| Ruby | `ruby/Gemfile` | `cd ruby && BUNDLE_PATH=vendor/bundle bundle update mongo` |
-| PHP | `php/composer.json` | `cd php && composer update mongodb/mongodb` |
-| Python | none (always latest on fresh venv) | `cd python && .venv/bin/pip install --upgrade pymongo` |
-| Java | `java/pom.xml` `<mongodb-driver.version>` | Edit the property, Maven re-downloads on next build |
-| C# | `csharp/hello.csproj` | `cd csharp && dotnet add package MongoDB.Driver` |
-| Node | `node/package.json` | `cd node && npm install mongodb@latest` |
 
 ## CI
 
