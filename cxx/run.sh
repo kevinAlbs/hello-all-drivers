@@ -2,7 +2,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-if [ -d "$(pwd)/dependencies" ]; then
+if [ -n "${LOCAL_CXX_DRIVER_PATH:-}" ]; then
+    PREFIX="$LOCAL_CXX_DRIVER_PATH${LOCAL_C_DRIVER_PATH:+;$LOCAL_C_DRIVER_PATH}"
+elif [ -d "$(pwd)/dependencies" ]; then
     # Local source build: also needs the C driver it was built against.
     C_DEPS="$(cd "$(dirname "$0")/.." && pwd)/c/dependencies"
     PREFIX="$(pwd)/dependencies${C_DEPS:+;$C_DEPS}"
@@ -12,6 +14,9 @@ else
     echo "mongo-cxx-driver not found — run setup.sh or: brew install mongo-cxx-driver"
     exit 1
 fi
+
+# Clear the cmake cache so find_package re-runs with the current PREFIX.
+rm -f build/CMakeCache.txt
 
 cmake -S . -B build \
     -DCMAKE_BUILD_TYPE=Debug \

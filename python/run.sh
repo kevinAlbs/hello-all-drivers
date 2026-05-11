@@ -5,5 +5,11 @@ cd "$(dirname "$0")"
 if [ ! -d .venv ]; then
     python3 -m venv .venv
 fi
-.venv/bin/pip install pymongo --quiet
+
+if [ -n "${LOCAL_PYTHON_DRIVER_PATH:-}" ]; then
+    .venv/bin/pip install -e "$LOCAL_PYTHON_DRIVER_PATH" --quiet
+else
+    .venv/bin/pip install --force-reinstall pymongo --quiet
+fi
+
 .venv/bin/python3 hello.py

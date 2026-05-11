@@ -5,7 +5,9 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 DRIVER_VERSION="2.3.0"
 
-if [ -d "$SCRIPT_DIR/dependencies" ]; then
+if [ -n "${LOCAL_C_DRIVER_PATH:-}" ]; then
+    PREFIX="$LOCAL_C_DRIVER_PATH"
+elif [ -d "$SCRIPT_DIR/dependencies" ]; then
     PREFIX="$SCRIPT_DIR/dependencies"
 elif PREFIX="$(brew --prefix mongo-c-driver 2>/dev/null)"; then
     : # using Homebrew install
@@ -29,6 +31,9 @@ else
     )
     PREFIX="$SCRIPT_DIR/dependencies"
 fi
+
+# Clear the cmake cache so find_package re-runs with the current PREFIX.
+rm -f "$SCRIPT_DIR/build/CMakeCache.txt"
 
 cmake -S "$SCRIPT_DIR" -B "$SCRIPT_DIR/build" \
     -DCMAKE_BUILD_TYPE=Debug \

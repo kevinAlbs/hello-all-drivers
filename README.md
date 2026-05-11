@@ -53,6 +53,33 @@ The monitoring code lives in a separate file in each subdirectory (`monitor.c`,
 `monitor.py`, `CommandMonitor.java`, `Monitor.cs`, `monitor.js`) so the main
 hello file stays focused on the driver usage.
 
+## Testing with a local driver checkout
+
+Each `run.sh` (except PHP) accepts a `LOCAL_<LANG>_DRIVER_PATH` environment
+variable pointing to a local checkout of the driver. This lets you test
+unreleased driver changes without modifying the example code.
+
+| Language | Variable | Notes |
+|----------|----------|-------|
+| C        | `LOCAL_C_DRIVER_PATH` | Path to a CMake install prefix (e.g. `/path/to/install`) |
+| C++      | `LOCAL_CXX_DRIVER_PATH` | CMake install prefix; set `LOCAL_C_DRIVER_PATH` too if your C++ was built against a custom C driver |
+| Go       | `LOCAL_GO_DRIVER_PATH` | Path to the driver repo root; uses a Go workspace |
+| Rust     | `LOCAL_RUST_DRIVER_PATH` | Path to the driver repo root; patches `Cargo.toml` via `[patch.crates-io]` |
+| Ruby     | `LOCAL_RUBY_DRIVER_PATH` | Path to the driver gem source |
+| Python   | `LOCAL_PYTHON_DRIVER_PATH` | Path to the driver source; installed as an editable package |
+| Java     | `LOCAL_JAVA_DRIVER_PATH` | Path to the driver repo root; publishes to local Maven repo via Gradle |
+| C#       | `LOCAL_CSHARP_DRIVER_PATH` | Path to the driver repo root; packs into a local NuGet feed |
+| Node     | `LOCAL_NODE_DRIVER_PATH` | Path to the driver repo root (must be pre-built: `npm ci`) |
+
+Example:
+
+```bash
+LOCAL_GO_DRIVER_PATH=~/code/mongo-go-driver bash go/run.sh
+LOCAL_PYTHON_DRIVER_PATH=~/code/mongo-python-driver bash python/run.sh
+```
+
+The version printed in the output should reflect the local driver version.
+
 ## Adding your own code
 
 Make a branch of this repo.

@@ -2,6 +2,6 @@
   "name": "hello-node",
   "version": "1.0.0",
   "dependencies": {
-    "mongodb": "^7.0.0"
+    "mongodb": "file:../../../../../private/tmp/hello-drivers-test/node-mongodb-native"
   }
 }

@@ -12,6 +12,8 @@ c/.build_tmp/
 
 # Go
 go/hello
+go/go.work
+go/go.work.sum
 
 # Rust
 rust/target/
@@ -21,6 +23,8 @@ php/vendor/
 
 # Ruby
 ruby/vendor/
+ruby/Gemfile.local
+ruby/Gemfile.local.lock
 
 # Python
 python/.venv/
@@ -37,6 +41,7 @@ java/dependency-reduced-pom.xml
 # C++
 cxx/build/
 cxx/dependencies/
+*_install_manifest.txt
 
 # C#
 csharp/bin/
