@@ -16,3 +16,5 @@ The examples may assume that a MongoDB server is running on default ports. This 
 ```bash
 mongosh --eval "db.runCommand({ping:1})"
 ```
+
+Each directory has a `run.sh` script to run an example.
