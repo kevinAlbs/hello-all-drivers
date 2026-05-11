@@ -17,7 +17,7 @@ jobs:
           php-version: "8.4"
           extensions: mongodb
 
-      # setup-php replaces PATH wholesale; restore Go and Java explicitly.
+      # setup-php replaces PATH wholesale; restore Go, Java, and Node explicitly.
       - uses: actions/setup-go@v5
         with:
           go-version: "1.23"
@@ -26,6 +26,10 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
       # Ruby on macos-latest may be older than the mongo gem requires.
       - uses: ruby/setup-ruby@v1
