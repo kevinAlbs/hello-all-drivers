@@ -5,7 +5,7 @@ Minimal "hello world" examples for each MongoDB driver. Each example runs a ping
 ## Prerequisites
 
 A running MongoDB server on the default port:
-```
+```bash
 mongosh --eval "db.runCommand({ping:1})"
 ```
 
@@ -13,8 +13,17 @@ mongosh --eval "db.runCommand({ping:1})"
 
 Each subdirectory has a `run.sh` that installs dependencies and runs the example. Example:
 
-```
+```bash
+bash c/run.sh
+bash cxx/run.sh
+bash go/run.sh
+bash rust/run.sh
+bash ruby/run.sh
+bash php/run.sh
 bash python/run.sh
+bash java/run.sh
+bash csharp/run.sh
+bash node/run.sh
 ```
 
 Expected output format:
@@ -34,7 +43,7 @@ Edit the examples. There is a TODO comment suggesting where to modify.
 
 Use the `/update-deps` Claude Code command (requires [Claude Code](https://claude.ai/code)):
 
-```
+```bash
 /update-deps        # update all drivers
 /update-deps c      # update only the C driver
 /update-deps go     # update only the Go driver
