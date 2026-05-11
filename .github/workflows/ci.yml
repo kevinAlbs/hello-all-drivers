@@ -17,6 +17,11 @@ jobs:
           php-version: "8.4"
           extensions: mongodb
 
+      # Ruby on macos-latest may be older than the mongo gem requires.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
       - name: Start MongoDB
         run: |
           brew tap mongodb/brew
@@ -28,14 +33,23 @@ jobs:
       - name: Install C driver
         run: brew install mongo-c-driver
 
+      - name: Install C++ driver
+        run: brew install mongo-cxx-driver
+
       - name: C
         run: bash c/run.sh
+
+      - name: C++
+        run: bash cxx/run.sh
 
       - name: Go
         run: bash go/run.sh
 
       - name: Rust
         run: bash rust/run.sh
+
+      - name: Ruby
+        run: bash ruby/run.sh
 
       - name: PHP
         run: bash php/run.sh

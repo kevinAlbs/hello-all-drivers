@@ -2,18 +2,24 @@ Update the MongoDB driver dependency in one or more subdirectories to a new vers
 
 Usage: /update-deps [driver]
 
-If a driver name is given (c, go, rust, php, python, java, csharp, node), update only that driver.
+If a driver name is given (c, cxx, go, rust, ruby, php, python, java, csharp, node), update only that driver.
 If no argument is given, update all drivers.
 
 ## Per-driver instructions
 
 ### C (`c/`)
-The version is hardcoded in `c/setup.sh` as `DRIVER_VERSION="x.y.z"`.
+The version is hardcoded in `c/run.sh` as `DRIVER_VERSION="x.y.z"`.
 1. Find the latest release at https://github.com/mongodb/mongo-c-driver/releases
-2. Edit `DRIVER_VERSION` in `c/setup.sh` to the new version.
+2. Edit `DRIVER_VERSION` in `c/run.sh` to the new version.
 3. Delete `c/dependencies/` so the next run rebuilds from the new source.
-4. Run `bash c/setup.sh` to download and install the new version.
-5. Run `bash c/run.sh` to verify.
+4. Run `bash c/run.sh` to download, build, and verify.
+
+### C++ (`cxx/`)
+The version is hardcoded in `cxx/run.sh` as `DRIVER_VERSION="x.y.z"`.
+1. Find the latest release at https://github.com/mongodb/mongo-cxx-driver/releases
+2. Edit `DRIVER_VERSION` in `cxx/run.sh` to the new version.
+3. Delete `cxx/dependencies/` so the next run rebuilds from the new source.
+4. Run `bash cxx/run.sh` to download, build, and verify.
 
 ### Go (`go/`)
 1. Run: `cd go && go get go.mongodb.org/mongo-driver/v2@latest && go mod tidy`
@@ -24,6 +30,10 @@ The `Cargo.toml` pins a major version (`mongodb = "3"`). To update within the ma
 - Run: `cd rust && cargo update -p mongodb`
 To pin to an exact new version, edit `Cargo.toml` first, then run `cargo update`.
 Run `bash rust/run.sh` to verify.
+
+### Ruby (`ruby/`)
+1. Run: `cd ruby && BUNDLE_PATH=vendor/bundle bundle update mongo`
+2. Run `bash ruby/run.sh` to verify.
 
 ### PHP (`php/`)
 1. Run: `cd php && composer update mongodb/mongodb`
@@ -54,7 +64,7 @@ The version is set as `<mongodb-driver.version>` in `java/pom.xml`.
 
 Run all examples to confirm everything still works:
 ```
-for dir in c go rust php python java csharp node; do
+for dir in c cxx go rust ruby php python java csharp node; do
     echo "--- $dir ---"
     bash "$dir/run.sh"
 done

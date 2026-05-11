@@ -17,6 +17,9 @@ rust/target/
 # PHP
 php/vendor/
 
+# Ruby
+ruby/vendor/
+
 # Python
 python/.venv/
 python/__pycache__/
@@ -28,6 +31,10 @@ node/node_modules/
 # Java
 java/target/
 java/dependency-reduced-pom.xml
+
+# C++
+cxx/build/
+cxx/dependencies/
 
 # C#
 csharp/bin/

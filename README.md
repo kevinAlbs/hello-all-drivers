@@ -16,8 +16,10 @@ Every subdirectory has a `run.sh` that installs dependencies and runs the exampl
 
 ```
 bash c/run.sh
+bash cxx/run.sh
 bash go/run.sh
 bash rust/run.sh
+bash ruby/run.sh
 bash php/run.sh
 bash python/run.sh
 bash java/run.sh
@@ -31,21 +33,9 @@ Ping from <driver> <version> ...
 Ping from <driver> <version> ... OK
 ```
 
-### C driver: first-time setup
-
-The C example builds `mongo-c-driver` from source and installs it locally.
-Run `setup.sh` once before `run.sh`:
-
-```
-bash c/setup.sh   # downloads and builds mongo-c-driver into c/dependencies/
-bash c/run.sh
-```
-
-Alternatively, `run.sh` will use a Homebrew install if one is present:
-```
-brew install mongo-c-driver
-bash c/run.sh
-```
+The C and C++ examples build `mongo-c-driver` / `mongo-cxx-driver` from source
+on first run if the library is not already installed. Pass
+`brew install mongo-c-driver mongo-cxx-driver` to skip the source build.
 
 ## Adding your own code
 
@@ -62,16 +52,15 @@ Use the `/update-deps` Claude Code command (requires [Claude Code](https://claud
 /update-deps go     # update only the Go driver
 ```
 
-The command knows where each driver pins its version and which package-manager
-command to run. After updating, it verifies each example still runs.
-
 ### Updating manually
 
 | Driver | Where the version lives | How to update |
 |--------|------------------------|---------------|
-| C | `c/setup.sh` `DRIVER_VERSION=` | Edit the variable, delete `c/dependencies/`, rerun `setup.sh` |
+| C | `c/run.sh` `DRIVER_VERSION=` | Edit the variable, delete `c/dependencies/`, rerun `run.sh` |
+| C++ | `cxx/run.sh` `DRIVER_VERSION=` | Edit the variable, delete `cxx/dependencies/`, rerun `run.sh` |
 | Go | `go/go.mod` | `cd go && go get go.mongodb.org/mongo-driver/v2@latest && go mod tidy` |
 | Rust | `rust/Cargo.toml` major pin | `cd rust && cargo update -p mongodb` |
+| Ruby | `ruby/Gemfile` | `cd ruby && BUNDLE_PATH=vendor/bundle bundle update mongo` |
 | PHP | `php/composer.json` | `cd php && composer update mongodb/mongodb` |
 | Python | none (always latest on fresh venv) | `cd python && .venv/bin/pip install --upgrade pymongo` |
 | Java | `java/pom.xml` `<mongodb-driver.version>` | Edit the property, Maven re-downloads on next build |
@@ -82,10 +71,11 @@ command to run. After updating, it verifies each example still runs.
 
 The repository uses GitHub Actions (`.github/workflows/ci.yml`). It runs on
 every push and pull request using a `macos-latest` runner so that
-`brew install mongo-c-driver` works without building from source.
+`brew install mongo-c-driver` and `brew install mongo-cxx-driver` work natively.
 
 The workflow:
 1. Installs PHP + the `mongodb` PECL extension via `shivammathur/setup-php`
-2. Installs and starts MongoDB via `mongodb/brew`
-3. Installs the C driver via `brew install mongo-c-driver`
-4. Runs `bash <driver>/run.sh` for each of the eight drivers
+2. Installs Ruby 3.3 via `ruby/setup-ruby`
+3. Installs and starts MongoDB via `mongodb/brew`
+4. Installs the C and C++ drivers via Homebrew
+5. Runs `bash <driver>/run.sh` for all ten drivers

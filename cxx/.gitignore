@@ -1,0 +1,3 @@
+# Override global .vscode ignore — this settings.json is project config, not personal IDE state
+!.vscode/
+!.vscode/settings.json
